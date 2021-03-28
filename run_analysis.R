@@ -37,3 +37,10 @@ actlabel <- Y_merg[,-1]
 # 4. Appropriately labels the data set with descriptive variable names.
 colnames(X_merg) <- variable_names[var_select[,1],2]
 
+
+# 5. From the data set in step 4, creates a second, independent tidy data set with the average
+# of each variable for each activity and each subject.
+colnames(Sub_merg) <- "subject"
+total <- cbind(X_merg, actlabel, Sub_merg)
+total_mean <- total %>% group_by(actlabel, subject) %>% summarise_each(funs(mean))
+write.table(total_mean, file = "./getdata_projectfiles_UCI HAR Dataset/UCI HAR Dataset/tidydata.txt", row.names = FALSE, col.names = TRUE)
