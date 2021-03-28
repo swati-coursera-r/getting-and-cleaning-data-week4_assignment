@@ -27,3 +27,13 @@ activity_labels <- read.table("./getdata_projectfiles_UCI HAR Dataset/UCI HAR Da
 # 2. Extracts only the measurements on the mean and standard deviation for each measurement. 
 var_select <- variable_names[grep("mean\\(\\)|std\\(\\)",variable_names[,2]),]
 X_merg <- X_merg[,var_select[,1]]
+
+
+# 3. Uses descriptive activity names to name the activities in the data set
+colnames(Y_merg) <- "activity"
+Y_merg$activitylabel <- factor(Y_merg$activity, labels = as.character(activity_labels[,2]))
+actlabel <- Y_merg[,-1]
+
+# 4. Appropriately labels the data set with descriptive variable names.
+colnames(X_merg) <- variable_names[var_select[,1],2]
+
